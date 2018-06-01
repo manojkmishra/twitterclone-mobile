@@ -7,7 +7,8 @@ import { store, client } from './src/store';
 import { colors } from './src/utils/constants';
 
 //import Welcome from './src/components/Welcome';
-import HomeScreen from './src/screens/HomeScreen';
+//import HomeScreen from './src/screens/HomeScreen';
+import AppNavigation from './src/navigations';
 
 if (UIManager.setLayoutAnimationEnabledExperimental) { UIManager.setLayoutAnimationEnabledExperimental(true);}
 
@@ -15,7 +16,7 @@ export default class App extends React.Component
 { render() 
   {  return ( <ApolloProvider store={store} client={client}>
                 <ThemeProvider theme={colors}>
-                  <HomeScreen />
+                  < AppNavigation store={store} />
                 </ThemeProvider>
               </ApolloProvider>
     );
