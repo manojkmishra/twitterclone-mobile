@@ -9,9 +9,10 @@ const Root = styled.View `height: 40; flexDirection: row; `;
 const Button = styled(Touchable).attrs({feedback: 'opacity',})
             ` flex: 1; flexDirection: row; alignItems: center; justifyContent: space-around; paddingHorizontal: 32px;`;
 const ButtonText = styled.Text `  fontSize: 14;  fontWeight: 500;  color: ${props => props.theme.LIGHT_GRAY};`;
-const favoriteCount=3; const isFavorited=true;
+//const favoriteCount=3; 
+const isFavorited=true;
 
-function FeedCardBottom() 
+function FeedCardBottom({ favoriteCount}) 
 {  return (  <Root>
                <Button> 
                  <SimpleLineIcons name = "bubble" size={ICON_SIZE}  color={colors.LIGHT_GRAY}/>

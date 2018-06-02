@@ -11,13 +11,13 @@ const CardContentContainer = styled.View `flex: 1;  padding: 10px 20px 10px 0px;
 const CardContentText = styled.Text `fontSize: 14;   textAlign: left; fontWeight: 500; color: ${props => props.theme.SECONDARY};`;
 //const text = 'text in CardContentText' ;
 
-function FeedCard({text, user, createdAt})
+function FeedCard({text, user, createdAt, favoriteCount})
 {   return (<Root>
              <FeedCardHeader {...user} createdAt={createdAt} />
              < CardContentContainer >
                 <CardContentText> {text}</CardContentText>
              </CardContentContainer>
-             < FeedCardBottom/>
+             < FeedCardBottom favoriteCount={favoriteCount}/>
              </Root>
             );
     
