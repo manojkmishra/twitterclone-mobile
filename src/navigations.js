@@ -7,6 +7,7 @@ import { FontAwesome, SimpleLineIcons, EvilIcons } from '@expo/vector-icons';
 import ExploreScreen from './screens/ExploreScreen';
 import NotificationsScreen from './screens/NotificationsScreen';
 import ProfileScreen from './screens/ProfileScreen';
+import AuthenticationScreen from './screens/AuthenticationScreen';
 const TAB_ICON_SIZE = 20;
 const Tabs = TabNavigator(
   { Home1: {  screen: HomeScreen,    
@@ -50,11 +51,12 @@ class AppNavigator extends Component
                   {  dispatch: this.props.dispatch,
                      state: this.props.nav,
                  });
+               if (!this.props.user.isAuthenticated) {  return <AuthenticationScreen />; }
                return <AppMainNav navigation={nav} />;
             }
 }
 
-export default connect(state => ({ nav: state.nav,}))(AppNavigator);
+export default connect(state => ({ nav: state.nav, user: state.user}))(AppNavigator);
 
 export const router = AppMainNav.router;
 
