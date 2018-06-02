@@ -1,6 +1,7 @@
 import React from 'react';
 import styled from 'styled-components/native';
 import { fakeAvatar} from '../../utils/constants';
+import distanceInWordsToNow from 'date-fns/distance_in_words_to_now';
 
 const AVATAR_SIZE = 40; const AVATAR_RADIUS = AVATAR_SIZE / 2;
 
@@ -14,22 +15,22 @@ const MetaBottomContainer = styled.View `flex: 0.8; alignSelf: stretch; alignIte
 const MetaText = styled.Text `fontSize: 14; fontWeight: 600; color: ${props => props.theme.LIGHT_GRAY};`;
 const MetaFullName = styled.Text ` fontSize: 16; fontWeight: bold; color: ${props => props.theme.SECONDARY};`;
 
-const username ='manojmishra'; 
-const firstname='manoj'; 
-const lastname='mishra'; 
-const avatar=fakeAvatar;
+//const username ='manojmishra'; 
+//const firstname='manoj'; 
+//const lastname='mishra'; 
+const fakeavatar=fakeAvatar;
 
-function FeedCardHeader() 
+function FeedCardHeader({username, firstname, lastname, avatar, createdAt}) 
 { return (
           <Root>
-            <AvatarContainer><Avatar source={{uri: avatar }}/></AvatarContainer>
+            <AvatarContainer><Avatar source={{uri: avatar || fakeavatar}}/></AvatarContainer>
             <MetaContainer>
               < MetaTopContainer> 
                  <MetaFullName> {firstname} {lastname}</MetaFullName>
                   <MetaText style={{ marginLeft: 5 }}> @{username} </MetaText>
               </MetaTopContainer>
               <MetaBottomContainer>
-                 <MetaText> 1 day ago </MetaText>
+                 <MetaText> {distanceInWordsToNow(createdAt)} ago </MetaText>
               </MetaBottomContainer>
             </MetaContainer>
           </Root>

@@ -1,12 +1,13 @@
 {
   "main": "node_modules/expo/AppEntry.js",
   "private": true,
-    "scripts": {
-      "postinstall": "rndebugger-open"
-    },
+  "scripts": {
+    "postinstall": "rndebugger-open"
+  },
   "dependencies": {
     "@appandflow/touchable": "^2.0.0",
     "apollo-client": "1.9.0-0",
+    "date-fns": "^1.29.0",
     "expo": "^27.0.1",
     "react": "^16.4.0",
     "react-apollo": "1.4.8",
