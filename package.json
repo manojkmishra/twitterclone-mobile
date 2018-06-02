@@ -1,13 +1,17 @@
 {
   "main": "node_modules/expo/AppEntry.js",
   "private": true,
+    "scripts": {
+      "postinstall": "rndebugger-open"
+    },
   "dependencies": {
     "@appandflow/touchable": "^2.0.0",
     "apollo-client": "1.9.0-0",
     "expo": "^27.0.1",
     "react": "^16.4.0",
-    "react-apollo": "^2.1.4",
+    "react-apollo": "1.4.8",
     "react-native": "https://github.com/expo/react-native/archive/sdk-27.0.0.tar.gz",
+    "react-native-debugger-open": "^0.3.17",
     "react-navigation": "1.0.0-beta.11",
     "react-redux": "5.0.5",
     "redux": "3.7.2",
