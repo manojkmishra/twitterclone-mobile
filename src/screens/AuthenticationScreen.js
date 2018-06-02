@@ -30,7 +30,7 @@ class AuthenticationScreen extends Component
   render() 
   { if (this.state.showSignup)
       { return ( <Root>
-                <SignupForm/>
+                <SignupForm onBackPress={this._onBackPress}/>
                 </Root>
               )
       }
