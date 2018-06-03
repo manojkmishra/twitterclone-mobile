@@ -2,8 +2,10 @@ import React, { Component } from 'react';
 import styled from 'styled-components/native';
 import { MaterialIcons } from '@expo/vector-icons';
 import Touchable from '@appandflow/touchable';
-import { colors } from '../utils/constants';
+import { colors , fakeAvatar} from '../utils/constants';
 import { Platform, Keyboard, AsyncStorage } from 'react-native';
+import { graphql } from 'react-apollo';
+import SIGNUP_MUTATION from '../graphql/mutations/signup';
 
 const Root = styled.View ` flex: 1; position: relative; justifyContent: center; alignItems: center;`;
 const Wrapper = styled.View `alignSelf: stretch; alignItems: center; justifyContent: center; flex: 1;`;
@@ -34,6 +36,19 @@ class SignupForm extends Component
                        if (!fullName || !email || !password || !username) { return true; }
                         return false;
                      }
+  _onSignupPress = async () => 
+  { const { fullName, email, password, username } = this.state;
+    const avatar = fakeAvatar;
+
+     const { data } = await this.props.mutate(   //put all variables of mutation of adding user in graphql
+           {  variables: { fullName, email,  password,  username, avatar, } 
+           });
+     console.log('===/src/components/signupForm.js_onsignupress-data=',data);
+    // try { await AsyncStorage.setItem('@twitterclone', data.signup.token);
+     //    } 
+    // catch (error) { throw error; }
+
+  };
   render() 
   {  return (  <Root>
                  <BackButton  onPress={this.props.onBackPress}>
@@ -53,11 +68,11 @@ class SignupForm extends Component
                         <Input   placeholder="Username" autoCapitalize="none" onChangeText={text => this._onChangeText(text, 'username')} />
                     </InputWrapper>
                  </ Wrapper >
-                 <ButtonConfirm disabled={this._checkIfDisabled()}>
+                 <ButtonConfirm onPress={this._onSignupPress} disabled={this._checkIfDisabled()}>
                     <ButtonConfirmText>Sign Up</ButtonConfirmText>
                  </ButtonConfirm>
                </Root>
            );
   }
 }
-export default SignupForm;
+export default graphql(SIGNUP_MUTATION) (SignupForm);
