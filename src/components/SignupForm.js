@@ -6,6 +6,7 @@ import { colors , fakeAvatar} from '../utils/constants';
 import { Platform, Keyboard, AsyncStorage } from 'react-native';
 import { graphql } from 'react-apollo';
 import SIGNUP_MUTATION from '../graphql/mutations/signup';
+import Loading from '../components/Loading';
 
 const Root = styled.View ` flex: 1; position: relative; justifyContent: center; alignItems: center;`;
 const Wrapper = styled.View `alignSelf: stretch; alignItems: center; justifyContent: center; flex: 1;`;
@@ -37,20 +38,23 @@ class SignupForm extends Component
                         return false;
                      }
   _onSignupPress = async () => 
-  { const { fullName, email, password, username } = this.state;
+  {  this.setState({ loading: true });
+    const { fullName, email, password, username } = this.state;
     const avatar = fakeAvatar;
 
      const { data } = await this.props.mutate(   //put all variables of mutation of adding user in graphql
            {  variables: { fullName, email,  password,  username, avatar, } 
            });
      console.log('===/src/components/signupForm.js_onsignupress-data=',data);
-    // try { await AsyncStorage.setItem('@twitterclone', data.signup.token);
-     //    } 
-    // catch (error) { throw error; }
+     try { await AsyncStorage.setItem('@twitterclone', data.signup.token);
+            this.setState({ loading: false });
+         } 
+     catch (error) { throw error; }
 
   };
   render() 
-  {  return (  <Root>
+  {  if (this.state.loading) { return <Loading />;}
+     return (  <Root>
                  <BackButton  onPress={this.props.onBackPress}>
                     <MaterialIcons color={colors.WHITE} size={30} name="arrow-back" />
                  </BackButton>
