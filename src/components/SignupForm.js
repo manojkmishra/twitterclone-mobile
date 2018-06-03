@@ -4,9 +4,12 @@ import { MaterialIcons } from '@expo/vector-icons';
 import Touchable from '@appandflow/touchable';
 import { colors , fakeAvatar} from '../utils/constants';
 import { Platform, Keyboard, AsyncStorage } from 'react-native';
-import { graphql } from 'react-apollo';
+import { graphql,compose } from 'react-apollo';
 import SIGNUP_MUTATION from '../graphql/mutations/signup';
 import Loading from '../components/Loading';
+import { connect } from 'react-redux';
+import { login } from '../actions/user';
+
 
 const Root = styled.View ` flex: 1; position: relative; justifyContent: center; alignItems: center;`;
 const Wrapper = styled.View `alignSelf: stretch; alignItems: center; justifyContent: center; flex: 1;`;
@@ -39,18 +42,20 @@ class SignupForm extends Component
                      }
   _onSignupPress = async () => 
   {  this.setState({ loading: true });
-    const { fullName, email, password, username } = this.state;
-    const avatar = fakeAvatar;
-
-     const { data } = await this.props.mutate(   //put all variables of mutation of adding user in graphql
-           {  variables: { fullName, email,  password,  username, avatar, } 
-           });
-     console.log('===/src/components/signupForm.js_onsignupress-data=',data);
-     try { await AsyncStorage.setItem('@twitterclone', data.signup.token);
-            this.setState({ loading: false });
+     const { fullName, email, password, username } = this.state;
+     const avatar = fakeAvatar;    
+     try {  
+          const { data } = await this.props.mutate({  variables: { fullName, email,  password,  username, avatar, } });
+          //put all variables of mutation of adding user in graphql
+           console.log('===/src/components/signupForm.js_onsignupress-this.props=', this.props);
+           console.log('===/src/components/signupForm.js_onsignupress-data=',data);
+           //await AsyncStorage.setItem('@twitteryoutubeclone', data.signup.token);
+         //   console.log('===/src/components/signupForm.js_@twitteryoutubeclone=', twitteryoutubeclone);
+           this.setState({ loading: false });
+         //   console.log('===/src/components/signupForm.js_loading=', loading);
+           return this.props.login();
          } 
      catch (error) { throw error; }
-
   };
   render() 
   {  if (this.state.loading) { return <Loading />;}
@@ -79,4 +84,5 @@ class SignupForm extends Component
            );
   }
 }
-export default graphql(SIGNUP_MUTATION) (SignupForm);
+//export default graphql(SIGNUP_MUTATION) (SignupForm);
+export default compose(graphql(SIGNUP_MUTATION), connect(undefined, { login })) ( SignupForm,);
