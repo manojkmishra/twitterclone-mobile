@@ -19,6 +19,7 @@ export default class App extends React.Component
   componentWillMount() {   this._checkIfToken();  }
   _checkIfToken = async () => 
   { try { const token = await AsyncStorage.getItem('@twitteryoutubeclone');
+          // const token = await AsyncStorage.removeItem('@twitteryoutubeclone');  //---to logout
           if (token != null) {  store.dispatch(login());  }
         } catch (error) {  throw error; }
     this.setState({ appIsReady: true });
