@@ -15,16 +15,16 @@ import AppNavigation from './src/navigations';
 if (UIManager.setLayoutAnimationEnabledExperimental) { UIManager.setLayoutAnimationEnabledExperimental(true);}
 
 export default class App extends React.Component 
-{ //state = { appIsReady: false, };
+{ state = { appIsReady: false, };
   componentWillMount() {   this._checkIfToken();  }
   _checkIfToken = async () => 
   { try { const token = await AsyncStorage.getItem('@twitteryoutubeclone');
           if (token != null) {  store.dispatch(login());  }
         } catch (error) {  throw error; }
-   // this.setState({ appIsReady: true });
+    this.setState({ appIsReady: true });
   };
   render() 
-  { //if (!this.state.appIsReady) { return <AppLoading />; } 
+  { if (!this.state.appIsReady) { return <AppLoading />; } 
     return ( <ApolloProvider store={store} client={client}>
                 <ThemeProvider theme={colors}>
                   < AppNavigation store={store} />
