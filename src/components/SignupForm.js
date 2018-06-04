@@ -49,7 +49,7 @@ class SignupForm extends Component
           //put all variables of mutation of adding user in graphql
            console.log('===/src/components/signupForm.js_onsignupress-this.props=', this.props);
            console.log('===/src/components/signupForm.js_onsignupress-data=',data);
-           //await AsyncStorage.setItem('@twitteryoutubeclone', data.signup.token);
+           await AsyncStorage.setItem('@twitteryoutubeclone', data.signup.token);
          //   console.log('===/src/components/signupForm.js_@twitteryoutubeclone=', twitteryoutubeclone);
            this.setState({ loading: false });
          //   console.log('===/src/components/signupForm.js_loading=', loading);
