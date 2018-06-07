@@ -5,6 +5,8 @@ import Touchable from '@appandflow/touchable';
 import Loading from './Loading';
 import { connect } from 'react-redux';
 import { connectActionSheet } from '@expo/react-native-action-sheet';
+import { logout } from '../actions/user';
+
 
 const AVATAR_SIZE = 30; const AVATAR_RADIUS = AVATAR_SIZE / 2;
 
@@ -20,7 +22,10 @@ class HeaderAvatar extends Component
      const destructiveButtonIndex = 0;
      this.props.showActionSheetWithOptions({ options,destructiveButtonIndex, },
                                              buttonIndex => { console.log('/src/components/headeravatar.js-buttoninddx=',buttonIndex)  
-                                                            },);
+                                                             if (buttonIndex === 0) { return this.props.logout();
+                                                                                    }
+                                                            }
+                                          );
   };
    render() { // const info = false;
                //if(!info)
@@ -38,4 +43,6 @@ class HeaderAvatar extends Component
 }
 //export default HeaderAvatar;
 //export default connect(state => ({ info: state.user.info }))(HeaderAvatar) //----before actionsheet
-export default connect(state => ({ info: state.user.info }))(connectActionSheet(HeaderAvatar))
+//export default connect(state => ({ info: state.user.info }))(connectActionSheet(HeaderAvatar))
+//--------------------------------------------mapstate-props------------dispatch fn------------
+export default connect(state => ({ info: state.user.info }), { logout })( connectActionSheet(HeaderAvatar),);

@@ -5,8 +5,8 @@ import thunk from 'redux-thunk';
 import { createLogger } from 'redux-logger';
 import reducers from './reducers';
 import { AsyncStorage } from 'react-native';
-const networkInterface = createNetworkInterface({  uri: 'http://10.133.44.151:3000/graphql',});
-//const networkInterface = createNetworkInterface({  uri: 'http://192.168.0.2:3000/graphql',});
+//const networkInterface = createNetworkInterface({  uri: 'http://10.133.44.151:3000/graphql',});
+const networkInterface = createNetworkInterface({  uri: 'http://192.168.0.3:3000/graphql',});
 
 networkInterface.use(
 [{  async applyMiddleware(req, next) 
