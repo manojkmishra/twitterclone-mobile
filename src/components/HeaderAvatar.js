@@ -17,11 +17,11 @@ class HeaderAvatar extends Component
 { //state = {}
   _onOpenActionSheet = () => 
   {  const options = ['Logout', 'Cancel'];
-     //const destructiveButtonIndex = 0;
-     this.props.showActionSheetWithOptions({ options, },
-                                             buttonIndex => {   
+     const destructiveButtonIndex = 0;
+     this.props.showActionSheetWithOptions({ options,destructiveButtonIndex, },
+                                             buttonIndex => { console.log('/src/components/headeravatar.js-buttoninddx=',buttonIndex)  
                                                             },);
-                                          };
+  };
    render() { // const info = false;
                //if(!info)
               if (!this.props.info)
