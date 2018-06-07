@@ -1,16 +1,24 @@
 import React, { Component } from 'react';
 import styled from 'styled-components/native';
 import FeedCard from '../components/FeedCard/FeedCard';
-import { graphql} from 'react-apollo';
+import { graphql, compose, withApollo} from 'react-apollo';
 import GET_TWEETS_QUERY from '../graphql/queries/getTweets';
 import { ActivityIndicator, FlatList } from 'react-native';
+import ME_QUERY from '../graphql/queries/me';
+import { connect } from 'react-redux';
+import { getUserInfo } from '../actions/user';
 
 const Root = styled.View` flex: 1; paddingTop: 5; backgroundColor: #f2f2f2`;
 //const T = styled.Text``;
 const List = styled.ScrollView``;
 class HomeScreen extends Component 
 { state ={};
-   _renderItem = ({ item }) => <FeedCard {...item} />;
+  componentDidMount() {  this._getUserInfo(); }
+  _getUserInfo = async () => 
+  { const { data: { me } } = await this.props.client.query({ query: ME_QUERY }); //client props available because at last line connect with actions
+    this.props.getUserInfo(me);
+  };
+  _renderItem = ({ item }) => <FeedCard {...item} />;
   render() 
     {
        console.log('state=', this.state);
@@ -35,4 +43,5 @@ class HomeScreen extends Component
 }
     
 //export default HomeScreen;
-export default graphql(GET_TWEETS_QUERY)(HomeScreen);
+//export default graphql(GET_TWEETS_QUERY)(HomeScreen);
+export default withApollo( compose(connect(undefined, { getUserInfo }), graphql(GET_TWEETS_QUERY))(  HomeScreen, ),);
