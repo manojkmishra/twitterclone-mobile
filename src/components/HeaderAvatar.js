@@ -6,6 +6,7 @@ import Loading from './Loading';
 import { connect } from 'react-redux';
 import { connectActionSheet } from '@expo/react-native-action-sheet';
 import { logout } from '../actions/user';
+import { withApollo } from 'react-apollo';
 
 
 const AVATAR_SIZE = 30; const AVATAR_RADIUS = AVATAR_SIZE / 2;
@@ -22,7 +23,8 @@ class HeaderAvatar extends Component
      const destructiveButtonIndex = 0;
      this.props.showActionSheetWithOptions({ options,destructiveButtonIndex, },
                                              buttonIndex => { console.log('/src/components/headeravatar.js-buttoninddx=',buttonIndex)  
-                                                             if (buttonIndex === 0) { return this.props.logout();
+                                                             if (buttonIndex === 0) { this.props.client.resetStore()
+                                                                                      return this.props.logout();
                                                                                     }
                                                             }
                                           );
@@ -45,4 +47,5 @@ class HeaderAvatar extends Component
 //export default connect(state => ({ info: state.user.info }))(HeaderAvatar) //----before actionsheet
 //export default connect(state => ({ info: state.user.info }))(connectActionSheet(HeaderAvatar))
 //--------------------------------------------mapstate-props------------dispatch fn------------
-export default connect(state => ({ info: state.user.info }), { logout })( connectActionSheet(HeaderAvatar),);
+//export default connect(state => ({ info: state.user.info }), { logout })( connectActionSheet(HeaderAvatar),);
+export default withApollo(connect(state => ({ info: state.user.info }), { logout })( connectActionSheet(HeaderAvatar),));
