@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import styled from 'styled-components/native';
 import Touchable from '@appandflow/touchable';
 import { fakeAvatar} from '../utils/constants';
+import Loading from './Loading';
 
 const AVATAR_SIZE = 30; const AVATAR_RADIUS = AVATAR_SIZE / 2;
 
@@ -12,7 +13,13 @@ const Button = styled(Touchable).attrs({ feedback: 'opacity', hitSlop: { top: 20
 
 class HeaderAvatar extends Component 
 { state = {}
-   render() {  return ( <Button>
+   render() {  const info = false;
+               if(!info){ return ( <Button disabled>
+                                   <Loading size="small"/>
+                                   </Button>
+                               );
+                        }
+               return ( <Button>
                         <Avatar source={{ uri: fakeAvatar }} />
                        </Button>
                      );
