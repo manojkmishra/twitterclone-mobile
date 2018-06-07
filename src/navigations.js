@@ -10,6 +10,7 @@ import ProfileScreen from './screens/ProfileScreen';
 import AuthenticationScreen from './screens/AuthenticationScreen';
 import HeaderAvatar from './components/HeaderAvatar';
 import ButtonHeader from './components/ButtonHeader';
+import NewTweetScreen from './screens/NewTweetScreen';
 
 const TAB_ICON_SIZE = 20;
 const Tabs = TabNavigator(
@@ -38,17 +39,25 @@ const Tabs = TabNavigator(
   },
 );
 
+const NewTweetModal = StackNavigator(
+  {
+    NewTweet: {
+      screen: NewTweetScreen,
+    }
+  })
+
 const AppMainNav = StackNavigator(
   {  Home: { screen :  Tabs,
-              navigationOptions: () => (
+              navigationOptions: ({ navigation }) => (
                 { headerLeft: <HeaderAvatar/>,
-                  headerRight: ( <ButtonHeader  side="right" >
+                  headerRight: ( <ButtonHeader  side="right" onPress= {() => navigation.navigate('NewTweet')} >
                                    <SimpleLineIcons color={colors.PRIMARY} size={20} name="pencil" />
                                  </ButtonHeader>
                                ),
               
                  })
            },
+     NewTweet: {  screen: NewTweetModal,},
   },
   { cardStyle: { backgroundColor: '#F1F6FA', },
     navigationOptions: () => (
