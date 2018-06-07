@@ -3,6 +3,7 @@ import styled from 'styled-components/native';
 import Touchable from '@appandflow/touchable';
 import { fakeAvatar} from '../utils/constants';
 import Loading from './Loading';
+import { connect } from 'react-redux';
 
 const AVATAR_SIZE = 30; const AVATAR_RADIUS = AVATAR_SIZE / 2;
 
@@ -13,16 +14,19 @@ const Button = styled(Touchable).attrs({ feedback: 'opacity', hitSlop: { top: 20
 
 class HeaderAvatar extends Component 
 { state = {}
-   render() {  const info = false;
-               if(!info){ return ( <Button disabled>
+   render() { // const info = false;
+               //if(!info)
+              if (!this.props.info)
+               { return ( <Button disabled>
                                    <Loading size="small"/>
                                    </Button>
                                );
                         }
                return ( <Button>
-                        <Avatar source={{ uri: fakeAvatar }} />
+                        <Avatar source={{ uri: this.props.info.avatar }} />
                        </Button>
                      );
            }
 }
-export default HeaderAvatar;
+//export default HeaderAvatar;
+export default connect(state => ({ info: state.user.info }))(HeaderAvatar)
