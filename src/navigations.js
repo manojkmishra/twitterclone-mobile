@@ -8,6 +8,7 @@ import ExploreScreen from './screens/ExploreScreen';
 import NotificationsScreen from './screens/NotificationsScreen';
 import ProfileScreen from './screens/ProfileScreen';
 import AuthenticationScreen from './screens/AuthenticationScreen';
+import HeaderAvatar from './components/HeaderAvatar';
 const TAB_ICON_SIZE = 20;
 const Tabs = TabNavigator(
   { Home1: {  screen: HomeScreen,    
@@ -36,7 +37,9 @@ const Tabs = TabNavigator(
 );
 
 const AppMainNav = StackNavigator(
-  {  Home: { screen :  Tabs}
+  {  Home: { screen :  Tabs,
+              navigationOptions: () => ({ headerLeft: <HeaderAvatar/> })
+           },
   },
   { cardStyle: { backgroundColor: '#F1F6FA', },
     navigationOptions: () => (
