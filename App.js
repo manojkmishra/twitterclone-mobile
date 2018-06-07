@@ -11,6 +11,7 @@ import { AppLoading } from 'expo';
 //import Welcome from './src/components/Welcome';
 //import HomeScreen from './src/screens/HomeScreen';
 import AppNavigation from './src/navigations';
+import { ActionSheetProvider } from '@expo/react-native-action-sheet';
 
 if (UIManager.setLayoutAnimationEnabledExperimental) { UIManager.setLayoutAnimationEnabledExperimental(true);}
 
@@ -27,9 +28,11 @@ export default class App extends React.Component
   render() 
   { if (!this.state.appIsReady) { return <AppLoading />; } 
     return ( <ApolloProvider store={store} client={client}>
+               <ActionSheetProvider>
                 <ThemeProvider theme={colors}>
                   < AppNavigation store={store} />
                 </ThemeProvider>
+               </ActionSheetProvider>
               </ApolloProvider>
     );
   }
