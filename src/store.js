@@ -5,8 +5,12 @@ import thunk from 'redux-thunk';
 import { createLogger } from 'redux-logger';
 import reducers from './reducers';
 import { AsyncStorage } from 'react-native';
+import { SubscriptionClient, addGraphQLSubscriptions } from 'subscriptions-transport-ws';
 //const networkInterface = createNetworkInterface({  uri: 'http://10.133.44.151:3000/graphql',});
-const networkInterface = createNetworkInterface({  uri: 'http://192.168.0.3:3000/graphql',});
+const networkInterface = createNetworkInterface({  uri: 'http://192.168.0.5:3000/graphql',});
+
+const wsClient = new SubscriptionClient('ws://192.168.0.5:3000/subscriptions', { reconnect: true, connectionParams: {}  })
+//-------it will reach /resolvers/index.js---then tweet-resovlers--then--schema.js
 
 networkInterface.use(
 [{  async applyMiddleware(req, next) 
@@ -18,6 +22,9 @@ networkInterface.use(
       return next();
     }
 }])
+
+const networkInterfaceWithSubs = addGraphQLSubscriptions( networkInterface, wsClient  )
+export const client = new ApolloClient({  networkInterface: networkInterfaceWithSubs });
 
 export const client = new ApolloClient({  networkInterface,});
 
