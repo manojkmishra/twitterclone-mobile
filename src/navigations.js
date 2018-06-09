@@ -38,14 +38,15 @@ const Tabs = TabNavigator(
                    },
   },
 );
-
+//--------------------------------------------------------------------
 const NewTweetModal = StackNavigator(
   {
-    NewTweet: {
-      screen: NewTweetScreen,
-    }
-  })
-
+    NewTweet: {  screen: NewTweetScreen, }
+  },
+  { headerMode: 'none',
+  },
+)
+//--------------------------------------------------------------------
 const AppMainNav = StackNavigator(
   {  Home: { screen :  Tabs,
               navigationOptions: ({ navigation }) => (
@@ -54,7 +55,6 @@ const AppMainNav = StackNavigator(
                                    <SimpleLineIcons color={colors.PRIMARY} size={20} name="pencil" />
                                  </ButtonHeader>
                                ),
-              
                  })
            },
      NewTweet: {  screen: NewTweetModal,},
@@ -66,7 +66,7 @@ const AppMainNav = StackNavigator(
       }),
   }, 
 );
-
+//-------------------------------------------------------------------
 class AppNavigator extends Component 
 {  render() {  const nav = addNavigationHelpers(
                   {  dispatch: this.props.dispatch,
