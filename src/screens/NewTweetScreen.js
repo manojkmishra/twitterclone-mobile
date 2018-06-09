@@ -8,20 +8,19 @@ const Wrapper = styled.View` height: 80%; width: 90%; paddingTop: 5; backgroundC
 const Input = styled.TextInput.attrs({ multiline: true, placeholder: "Write Your Tweet", maxLength: 140,
               selectionColor: Platform.OS === 'ios' && colors.PRIMARY, autoFocus: true,})`  
               height: 40%;  width: 100%;  fontSize: 18;  color: ${props => props.theme.SECONDARY};`;
-const T = styled.Text``
+//const T = styled.Text``
 //autofocus in const Input---for keyboard to appear as we come to new tweet page
 
-class NewTweetScreen extends Component {
-  state = {  }
-  render() {
-    return (
-      <Root>
-        <Wrapper>
-        <Input/>
-        </Wrapper>
-      </Root>
-    );
+class NewTweetScreen extends Component
+{ state = { text: '', };
+  _onChangeText = text => this.setState({ text });
+  render() 
+  {  return ( <Root>
+               <Wrapper>
+                 <Input value={this.state.text} onChangeText={this._onChangeText} />
+               </Wrapper>
+              </Root>
+            );
   }
 }
-
 export default NewTweetScreen;
