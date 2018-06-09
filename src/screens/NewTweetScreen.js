@@ -3,6 +3,8 @@ import styled from 'styled-components/native';
 import { colors } from '../utils/constants';
 import { Platform, Keyboard } from 'react-native';
 import Touchable from '@appandflow/touchable';
+import { graphql} from 'react-apollo';
+import CREATE_TWEET_MUTATION from '../graphql/mutations/createTweet';
 
 const Root = styled.View` backgroundColor: ${props => props.theme.WHITE}; flex: 1; alignItems: center;`;
 const Wrapper = styled.View` height: 80%; width: 90%; paddingTop: 5;   position: relative; `;
@@ -25,12 +27,20 @@ class NewTweetScreen extends Component
   get _textLength() { console.log('/screens/newtweetscreen.js---text len=',this.state.text.length )
                     return 140 - this.state.text.length; 
                     }
+  get _buttonDisabled() { return this.state.text.length < 5; }
+
+  _onChangeText = text => this.setState({ text });
+
+  _onCreateTweetPress = async () => 
+  {  await this.props.mutate({  variables: {   text: this.state.text  } });
+  }
+                  
   render() 
   {  return ( <Root>
                <Wrapper>
                  <Input value={this.state.text} onChangeText={this._onChangeText} />
                  <TextLength>{this._textLength}</TextLength>
-                 <TweetButton>
+                 <TweetButton onPress={this._onCreateTweetPress} disabled={this._buttonDisabled}>
                     <TweetButtonText>Tweet</TweetButtonText>
                  </TweetButton>
                </Wrapper>
@@ -38,4 +48,4 @@ class NewTweetScreen extends Component
             );
   }
 }
-export default NewTweetScreen;
+export default  graphql(CREATE_TWEET_MUTATION)(NewTweetScreen);
