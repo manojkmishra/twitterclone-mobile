@@ -33,6 +33,8 @@ class NewTweetScreen extends Component
 
   _onCreateTweetPress = async () => 
   {  await this.props.mutate({  variables: {   text: this.state.text  } });
+     Keyboard.dismiss();
+     this.props.navigation.goBack(null);
   }
                   
   render() 
