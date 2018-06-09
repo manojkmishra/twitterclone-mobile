@@ -43,8 +43,10 @@ const NewTweetModal = StackNavigator(
   {
     NewTweet: {  screen: NewTweetScreen, }
   },
-  { headerMode: 'none',
+  {
+      headerMode: 'none',
   },
+
 )
 //--------------------------------------------------------------------
 const AppMainNav = StackNavigator(

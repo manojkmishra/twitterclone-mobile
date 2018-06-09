@@ -22,7 +22,9 @@ const TextLength = styled.Text`fontSize: 18; color: ${props => props.theme.PRIMA
 class NewTweetScreen extends Component
 { state = { text: '', };
   _onChangeText = text => this.setState({ text });
-  get _textLength() { return 140 - this.state.text.length; }
+  get _textLength() { console.log('/screens/newtweetscreen.js---text len=',this.state.text.length )
+                    return 140 - this.state.text.length; 
+                    }
   render() 
   {  return ( <Root>
                <Wrapper>
