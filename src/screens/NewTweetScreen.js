@@ -16,14 +16,18 @@ const TweetButton = styled(Touchable).attrs({ feedback: 'opacity', hitSlop: { to
                     borderRadius: 20; position: absolute; top: 60%; right: 0;`;
 //--position: absolute; top: 60%; right: 0---will keep the button on right --down of 60% place
 const TweetButtonText = styled.Text` color: ${props => props.theme.WHITE}; fontSize: 16;`;
+const TextLength = styled.Text`fontSize: 18; color: ${props => props.theme.PRIMARY}; position: absolute; top: 45%; right: 5%;`;
+
 
 class NewTweetScreen extends Component
 { state = { text: '', };
   _onChangeText = text => this.setState({ text });
+  get _textLength() { return 140 - this.state.text.length; }
   render() 
   {  return ( <Root>
                <Wrapper>
                  <Input value={this.state.text} onChangeText={this._onChangeText} />
+                 <TextLength>{this._textLength}</TextLength>
                  <TweetButton>
                     <TweetButtonText>Tweet</TweetButtonText>
                  </TweetButton>
