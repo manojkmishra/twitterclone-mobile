@@ -11,6 +11,7 @@ import AuthenticationScreen from './screens/AuthenticationScreen';
 import HeaderAvatar from './components/HeaderAvatar';
 import ButtonHeader from './components/ButtonHeader';
 import NewTweetScreen from './screens/NewTweetScreen';
+import { Keyboard } from 'react-native';
 
 const TAB_ICON_SIZE = 20;
 const Tabs = TabNavigator(
@@ -40,14 +41,19 @@ const Tabs = TabNavigator(
 );
 //--------------------------------------------------------------------
 const NewTweetModal = StackNavigator(
-  {
-    NewTweet: {  screen: NewTweetScreen, }
+  {  NewTweet: 
+     { screen: NewTweetScreen,
+       navigationOptions: ({ navigation }) => (
+         {  headerLeft: <HeaderAvatar />,
+            headerRight: (  <ButtonHeader side="right" onPress={() => {  Keyboard.dismiss();  navigation.goBack(null);  }} >
+                              <EvilIcons color={colors.PRIMARY} size={25} name="close" />
+                            </ButtonHeader>
+                         ),
+         }),
+    },
   },
-  {
-      headerMode: 'none',
-  },
-
-)
+  {headerMode: 'none',},
+);
 //--------------------------------------------------------------------
 const AppMainNav = StackNavigator(
   {  Home: { screen :  Tabs,
