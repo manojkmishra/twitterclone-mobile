@@ -6,6 +6,7 @@ import Touchable from '@appandflow/touchable';
 import { graphql,  compose} from 'react-apollo'; //compose is for last line-- to connect to redux to get username--for _onpress---optimisticUI
 import CREATE_TWEET_MUTATION from '../graphql/mutations/createTweet';
 import { connect } from 'react-redux';
+import GET_TWEETS_QUERY from '../graphql/queries/getTweets';
 
 const Root = styled.View` backgroundColor: ${props => props.theme.WHITE}; flex: 1; alignItems: center;`;
 const Wrapper = styled.View` height: 80%; width: 90%; paddingTop: 5;   position: relative; `;
@@ -33,7 +34,8 @@ class NewTweetScreen extends Component
   _onChangeText = text => this.setState({ text });
 
   _onCreateTweetPress = async () => 
-  {  await this.props.mutate(
+  {  const { user } = this.props;
+     await this.props.mutate(
         {  variables: {   text: this.state.text  },
            optimisticResponse: 
               { __typename: 'Mutation',
@@ -53,6 +55,12 @@ class NewTweetScreen extends Component
                      }
                   },
                 },
+                update: (store, { data: { createTweet } }) => //updating store for new tweet
+                {  const data = store.readQuery({ query: GET_TWEETS_QUERY }); //readQuery from cache
+                   if (!data.getTweets.find(t => t._id === createTweet._id)) //if no other tweet has same _id as new tweet
+                   { store.writeQuery({ query: GET_TWEETS_QUERY, data: { getTweets: [{ ...createTweet }, ...data.getTweets] } });
+                   }  //update store cache--with createTweet of optimisticResponse: (__typename: 'Mutation', createTweet: )//then put earlier data of getweets
+                 }
   
          });
      Keyboard.dismiss();
