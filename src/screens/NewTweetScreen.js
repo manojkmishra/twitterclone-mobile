@@ -3,8 +3,9 @@ import styled from 'styled-components/native';
 import { colors } from '../utils/constants';
 import { Platform, Keyboard } from 'react-native';
 import Touchable from '@appandflow/touchable';
-import { graphql} from 'react-apollo';
+import { graphql,  compose} from 'react-apollo'; //compose is for last line-- to connect to redux to get username--for _onpress---optimisticUI
 import CREATE_TWEET_MUTATION from '../graphql/mutations/createTweet';
+import { connect } from 'react-redux';
 
 const Root = styled.View` backgroundColor: ${props => props.theme.WHITE}; flex: 1; alignItems: center;`;
 const Wrapper = styled.View` height: 80%; width: 90%; paddingTop: 5;   position: relative; `;
@@ -32,7 +33,28 @@ class NewTweetScreen extends Component
   _onChangeText = text => this.setState({ text });
 
   _onCreateTweetPress = async () => 
-  {  await this.props.mutate({  variables: {   text: this.state.text  } });
+  {  await this.props.mutate(
+        {  variables: {   text: this.state.text  },
+           optimisticResponse: 
+              { __typename: 'Mutation',
+                createTweet: 
+                  { __typename: 'Tweet',
+                    text: this.state.text, //----it will come from state of this page as it knows the types text
+                    favoriteCount: 0, //---------we dnt know it---so 0 here
+                    _id: Math.round(Math.random() * -1000000), //----anything fake
+                    createdAt: new Date(), //---------create new date
+                    isFavorited: false, //-------keep it false
+                    user: //coming from redux---first import compose from graphql and connect from redux---then connect redux in last line then add values
+                     { __typename: 'User',
+                       username: user.username,
+                       firstName: user.firstName,
+                       lastName: user.lastName,
+                       avatar: user.avatar
+                     }
+                  },
+                },
+  
+         });
      Keyboard.dismiss();
      this.props.navigation.goBack(null);
   }
@@ -50,4 +72,6 @@ class NewTweetScreen extends Component
             );
   }
 }
-export default  graphql(CREATE_TWEET_MUTATION)(NewTweetScreen);
+//export default  NewTweetScreen;
+//export default  graphql(CREATE_TWEET_MUTATION)(NewTweetScreen);
+export default compose( graphql(CREATE_TWEET_MUTATION), connect(state => ({ user: state.user.info })))(NewTweetScreen);
