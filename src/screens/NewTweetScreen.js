@@ -27,7 +27,7 @@ class NewTweetScreen extends Component
 { state = { text: '', };
   _onChangeText = text => this.setState({ text });
   get _textLength() { console.log('/screens/newtweetscreen.js---text len=',this.state.text.length )
-                    return 140 - this.state.text.length; 
+                      return 140 - this.state.text.length; 
                     }
   get _buttonDisabled() { return this.state.text.length < 5; }
 

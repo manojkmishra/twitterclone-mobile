@@ -20,7 +20,7 @@
     "redux-devtools-extension": "^2.13.2",
     "redux-thunk": "^2.3.0",
     "styled-components": "^3.3.0",
-    "subscriptions-transport-ws": "^0.9.9"
+    "subscriptions-transport-ws": "0.8.2"
   },
   "devDependencies": {
     "redux-logger": "^3.0.6"

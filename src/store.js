@@ -26,7 +26,7 @@ networkInterface.use(
 const networkInterfaceWithSubs = addGraphQLSubscriptions( networkInterface, wsClient  )
 export const client = new ApolloClient({  networkInterface: networkInterfaceWithSubs });
 
-export const client = new ApolloClient({  networkInterface,});
+//export const client = new ApolloClient({  networkInterface,});
 
 //const middlewares = [client.middleware(), thunk];
 const middlewares = [client.middleware(), thunk,];
