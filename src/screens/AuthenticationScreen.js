@@ -3,7 +3,7 @@ import styled from 'styled-components/native';
 import Touchable from '@appandflow/touchable';
 import SignupForm from '../components/SignupForm';
 
-const Root = styled.View `flex: 1;  backgroundColor: ${props => props.theme.SECONDARY};  position: relative;`;
+const Root = styled.View `flex: 1;  backgroundColor: darkcyan ;  position: relative;`;
 const T = styled.Text``
 const ButtonSignupText = styled.Text`  color: ${props => props.theme.WHITE};  fontWeight: bold;  fontSize: 20;`;
 const ButtonSignup = styled(Touchable).attrs({  feedback: 'opacity'})`
